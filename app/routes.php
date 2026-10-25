@@ -1,0 +1,76 @@
+<?php
+$any = '*';
+$router->add('GET',  '/',          'AuthController@root');
+$router->add('GET',  '/login',     'AuthController@showLogin');
+$router->add('POST', '/login',     'AuthController@login');
+$router->add('POST', '/logout',    'AuthController@logout', $any);
+$router->add('GET',  '/password',  'AuthController@showPassword', $any);
+$router->add('POST', '/password',  'AuthController@changePassword', $any);
+$router->add('GET',  '/receipt/{id}', 'CashierController@receipt', ['student', 'cashier', 'admin']);
+
+$S = ['student'];
+$router->add('GET',  '/student',                          'StudentController@dashboard', $S);
+$router->add('GET',  '/student/profile',                  'StudentController@profile', $S);
+$router->add('POST', '/student/profile',                  'StudentController@profileUpdate', $S);
+$router->add('GET',  '/student/enrollment',               'StudentController@enrollment', $S);
+$router->add('POST', '/student/enrollment/add/{id}',      'StudentController@enrollAdd', $S);
+$router->add('POST', '/student/enrollment/drop/{id}',     'StudentController@enrollDrop', $S);
+$router->add('POST', '/student/enrollment/submit',        'StudentController@enrollSubmit', $S);
+$router->add('GET',  '/student/subjects',                 'StudentController@subjects', $S);
+$router->add('GET',  '/student/grades',                   'StudentController@grades', $S);
+$router->add('GET',  '/student/clearance',                'StudentController@clearance', $S);
+$router->add('POST', '/student/clearance/start',          'StudentController@clearanceStart', $S);
+$router->add('GET',  '/student/documents',                'StudentController@documents', $S);
+$router->add('GET',  '/student/documents/new',            'StudentController@documentNew', $S);
+$router->add('POST', '/student/documents',                'StudentController@documentStore', $S);
+$router->add('POST', '/student/documents/{id}/cancel',    'StudentController@documentCancel', $S);
+$router->add('GET',  '/student/payments',                 'StudentController@payments', $S);
+$router->add('GET',  '/student/payments/{id}/pay',        'StudentController@payForm', $S);
+$router->add('POST', '/student/payments/{id}/pay',        'StudentController@payStore', $S);
+
+$R = ['registrar'];
+$router->add('GET',  '/registrar',                          'RegistrarController@dashboard', $R);
+$router->add('GET',  '/registrar/enrollments',              'RegistrarController@enrollments', $R);
+$router->add('GET',  '/registrar/enrollments/{id}',         'RegistrarController@enrollmentShow', $R);
+$router->add('POST', '/registrar/enrollments/{id}/approve', 'RegistrarController@approve', $R);
+$router->add('POST', '/registrar/enrollments/{id}/return',  'RegistrarController@returnEnrollment', $R);
+$router->add('GET',  '/registrar/grades',                   'RegistrarController@grades', $R);
+$router->add('GET',  '/registrar/grades/{id}',              'RegistrarController@gradeSheet', $R);
+$router->add('POST', '/registrar/grades/{id}',              'RegistrarController@saveGrades', $R);
+$router->add('GET',  '/registrar/documents',                'RegistrarController@documents', $R);
+$router->add('POST', '/registrar/documents/{id}/advance',   'RegistrarController@advance', $R);
+$router->add('POST', '/registrar/documents/{id}/reject',    'RegistrarController@reject', $R);
+$router->add('GET',  '/registrar/offerings',                'RegistrarController@offerings', $R);
+$router->add('POST', '/registrar/subjects',                 'RegistrarController@subjectStore', $R);
+$router->add('POST', '/registrar/offerings',                'RegistrarController@offeringStore', $R);
+$router->add('POST', '/registrar/offerings/{id}/delete',    'RegistrarController@offeringDelete', $R);
+
+$C = ['cashier'];
+$router->add('GET',  '/cashier',                       'CashierController@dashboard', $C);
+$router->add('GET',  '/cashier/payments',              'CashierController@payments', $C);
+$router->add('POST', '/cashier/payments/{id}/verify',  'CashierController@verify', $C);
+$router->add('POST', '/cashier/payments/{id}/cash',    'CashierController@cash', $C);
+$router->add('POST', '/cashier/payments/{id}/reject',  'CashierController@reject', $C);
+$router->add('GET',  '/cashier/report',                'CashierController@report', $C);
+
+$D = ['department'];
+$router->add('GET',  '/department',                       'DepartmentController@dashboard', $D);
+$router->add('GET',  '/department/clearance',             'DepartmentController@clearance', $D);
+$router->add('POST', '/department/clearance/{id}/clear',  'DepartmentController@clear', $D);
+$router->add('POST', '/department/clearance/{id}/hold',   'DepartmentController@hold', $D);
+
+$A = ['admin'];
+$router->add('GET',  '/admin',                      'AdminController@dashboard', $A);
+$router->add('GET',  '/admin/users',                'AdminController@users', $A);
+$router->add('GET',  '/admin/users/new',            'AdminController@create', $A);
+$router->add('POST', '/admin/users',                'AdminController@store', $A);
+$router->add('GET',  '/admin/users/{id}/edit',      'AdminController@edit', $A);
+$router->add('POST', '/admin/users/{id}',           'AdminController@update', $A);
+$router->add('POST', '/admin/users/{id}/toggle',    'AdminController@toggle', $A);
+$router->add('POST', '/admin/users/{id}/reset',     'AdminController@reset', $A);
+$router->add('GET',  '/admin/settings',             'AdminController@settings', $A);
+$router->add('POST', '/admin/departments',          'AdminController@departmentStore', $A);
+$router->add('POST', '/admin/terms',                'AdminController@termStore', $A);
+$router->add('POST', '/admin/terms/{id}/current',   'AdminController@termCurrent', $A);
+$router->add('POST', '/admin/doctypes/{id}',        'AdminController@doctypeUpdate', $A);
+$router->add('GET',  '/admin/audit',                'AdminController@audit', $A);
